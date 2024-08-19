@@ -8,9 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 public class ServidorEcho {
 
@@ -34,6 +32,7 @@ public class ServidorEcho {
 			entrada = new BufferedReader(new InputStreamReader(canalEntrada));
 			saida = new PrintWriter(canalSaida, true);
 
+
 			while (true) {
 				String linhaPedido = entrada.readLine();
 
@@ -49,25 +48,39 @@ public class ServidorEcho {
 						String dataHoraCliente = partes[1].trim();
 						System.out.println("Hora passada: " + dataHoraCliente);
 
-						try {
-							// Converte a data/hora do cliente para o fuso-horário UTC
-							LocalDateTime dataHora = LocalDateTime.parse(dataHoraCliente);
-							ZonedDateTime dataHoraZoned = dataHora.atZone(ZoneId.of(fusoHorario));
-							System.out.printf("Horario retornado: " + dataHoraZoned);
+						if(isValidDate(dataHoraCliente)) {
+							try {
+								// Converte a data/hora do cliente para o fuso-horário UTC
+								LocalDateTime dataHora = LocalDateTime.parse(dataHoraCliente);
+								ZonedDateTime dataHoraZoned = dataHora.atZone(ZoneId.of(fusoHorario));
+								System.out.printf("Horario retornado: " + dataHoraZoned);
 
-							// Converte a data/hora para o fuso-horário desejado
-							ZonedDateTime dataHoraConvertida = dataHoraZoned.withZoneSameInstant(ZoneId.of(fusoHorario));
+								// Converte a data/hora para o fuso-horário desejado
+								ZonedDateTime dataHoraConvertida = dataHoraZoned.withZoneSameInstant(ZoneId.of(fusoHorario));
 
-							String mensagem = String.valueOf(dataHoraConvertida);
+								String mensagem = String.valueOf(dataHoraConvertida);
 
-							saida.println("Hora convertida: " + mensagem);
-						} catch (Exception e) {
-							saida.println("Erro ao converter a data/hora: " + e.getMessage());
+								saida.println("Hora convertida: " + mensagem);
+							} catch (Exception e) {
+								saida.println("Erro ao converter a data/hora: " + e.getMessage());
+							}
+						}else{
+							saida.println("Erro: data inválida");
 						}
-					}
+
 				}
 			}
 			sckEcho.close();
         }
 	}
+
+	public static boolean isValidDate(String dateString) {
+		try {
+			LocalDateTime.parse(dateString);
+			return true;
+		} catch (DateTimeException e) {
+			return false;
+		}
+	}
+
 }
