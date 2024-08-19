@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/RenanProject.iml" filepath="$PROJECT_DIR$/.idea/RenanProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alo-mundo-sockets-cliente/alo-mundo-sockets-cliente.iml" filepath="$PROJECT_DIR$/alo-mundo-sockets-cliente/alo-mundo-sockets-cliente.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alo-mundo-sockets-servidor/alo-mundo-sockets-servidor.iml" filepath="$PROJECT_DIR$/alo-mundo-sockets-servidor/alo-mundo-sockets-servidor.iml" />
+    </modules>
+  </component>
+</project>
